@@ -60,8 +60,12 @@
         {
           devShells.default = pkgs.mkShell {
             inputsFrom = builtins.attrValues self.checks;
-            buildInputs = [ rustToolchain ];
+            buildInputs = with pkgs; [
+             rustToolchain
+             websocat
+            ];
           };
+
 
           packages = {
             rustdoc = craneLib.cargoDoc (commonArgs // { inherit cargoArtifacts; });
