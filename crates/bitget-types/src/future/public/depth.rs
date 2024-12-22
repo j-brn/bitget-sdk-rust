@@ -5,9 +5,9 @@ use serde::{Deserialize, Deserializer};
 use std::fmt::{format, write, Display, Formatter};
 
 #[derive(Debug, PartialEq)]
-struct Quote {
-    price: f64,
-    size: f64,
+pub struct Quote {
+    pub price: f64,
+    pub size: f64,
 }
 
 impl<'de> Deserialize<'de> for Quote {
@@ -24,12 +24,12 @@ impl<'de> Deserialize<'de> for Quote {
 }
 
 #[derive(Deserialize, Debug, PartialEq)]
-struct OrderBook {
-    asks: Vec<Quote>,
-    bids: Vec<Quote>,
-    checksum: u32,
+pub struct OrderBook {
+    pub asks: Vec<Quote>,
+    pub bids: Vec<Quote>,
+    pub checksum: u32,
     #[serde(deserialize_with = "datetime_from_timestamp_str")]
-    ts: DateTime<Utc>,
+    pub ts: DateTime<Utc>,
 }
 
 #[cfg(test)]

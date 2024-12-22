@@ -4,13 +4,13 @@ use serde::{Deserialize, Deserializer};
 
 #[derive(Debug, PartialEq)]
 pub struct Candlestick {
-    start_time: DateTime<Utc>,
-    open: f64,
-    high: f64,
-    low: f64,
-    close: f64,
-    volume_coin: f64,
-    volume_currency: f64,
+    pub start_time: DateTime<Utc>,
+    pub open: f64,
+    pub high: f64,
+    pub low: f64,
+    pub close: f64,
+    pub volume_coin: f64,
+    pub volume_currency: f64,
 }
 
 impl<'de> Deserialize<'de> for Candlestick {
