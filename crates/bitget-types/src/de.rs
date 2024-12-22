@@ -23,22 +23,13 @@ where
     Ok(DateTime::from_timestamp_nanos(ts))
 }
 
-pub(crate) fn parse_f64<'de, D>(deserializer: D) -> Result<f64, D::Error>
+pub(crate) fn parse_from_str<'de, D, T>(deserializer: D) -> Result<T, D::Error>
 where
     D: Deserializer<'de>,
+    T: FromStr, <T as FromStr>::Err: std::fmt::Display,
 {
     let s: &str = Deserialize::deserialize(deserializer)?;
-    let num = f64::from_str(s).map_err(D::Error::custom)?;
+    let t = T::from_str(s).map_err(D::Error::custom)?;
 
-    Ok(num)
-}
-
-pub(crate) fn parse_usize<'de, D>(deserializer: D) -> Result<usize, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    let s: &str = Deserialize::deserialize(deserializer)?;
-    let num = usize::from_str(s).map_err(D::Error::custom)?;
-
-    Ok(num)
+    Ok(t)
 }
