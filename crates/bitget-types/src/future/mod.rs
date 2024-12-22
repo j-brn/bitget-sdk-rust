@@ -1,1 +1,1 @@
-mod public;
+pub mod public;
