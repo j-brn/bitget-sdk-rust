@@ -1,3 +1,3 @@
-pub mod trade;
-mod depth;
 mod candlestick;
+mod depth;
+pub mod trade;

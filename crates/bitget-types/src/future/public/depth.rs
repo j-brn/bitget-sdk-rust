@@ -1,16 +1,16 @@
-use std::fmt::{format, write, Display, Formatter};
+use crate::de::{datetime_from_timestamp_str, parse_from_str};
 use chrono::{DateTime, Utc};
-use serde::{Deserialize, Deserializer};
 use serde::de::Error;
-use crate::de::{parse_from_str, datetime_from_timestamp_str};
+use serde::{Deserialize, Deserializer};
+use std::fmt::{format, write, Display, Formatter};
 
 #[derive(Debug, PartialEq)]
 struct Quote {
     price: f64,
-    size: f64
+    size: f64,
 }
 
-impl <'de> Deserialize<'de> for Quote {
+impl<'de> Deserialize<'de> for Quote {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
@@ -29,14 +29,14 @@ struct OrderBook {
     bids: Vec<Quote>,
     checksum: u32,
     #[serde(deserialize_with = "datetime_from_timestamp_str")]
-    ts: DateTime<Utc>
+    ts: DateTime<Utc>,
 }
 
 #[cfg(test)]
 mod tests {
-    use chrono::DateTime;
     use crate::future::public::depth::{OrderBook, Quote};
     use crate::websocket::{DataPush, PushAction, SubscriptionArgs};
+    use chrono::DateTime;
 
     #[test]
     pub fn test_deserialize_data_push() {
@@ -85,20 +85,30 @@ mod tests {
                 channel: "books5".to_owned(),
                 inst_id: "BTCUSDT".to_owned(),
             },
-            data: vec![
-                OrderBook {
-                    asks: vec![
-                        Quote { price: 27000.5, size: 8.760 },
-                        Quote { price: 27001.0, size: 0.400 },
-                    ],
-                    bids: vec![
-                        Quote { price: 27000.0, size: 2.710 },
-                        Quote { price: 26999.5, size: 1.460 },
-                    ],
-                    checksum: 0,
-                    ts: DateTime::from_timestamp_nanos(1695716059516),
-                }
-            ],
+            data: vec![OrderBook {
+                asks: vec![
+                    Quote {
+                        price: 27000.5,
+                        size: 8.760,
+                    },
+                    Quote {
+                        price: 27001.0,
+                        size: 0.400,
+                    },
+                ],
+                bids: vec![
+                    Quote {
+                        price: 27000.0,
+                        size: 2.710,
+                    },
+                    Quote {
+                        price: 26999.5,
+                        size: 1.460,
+                    },
+                ],
+                checksum: 0,
+                ts: DateTime::from_timestamp_nanos(1695716059516),
+            }],
             ts: DateTime::from_timestamp_nanos(1695716059516),
         };
 
