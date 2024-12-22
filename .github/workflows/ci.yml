@@ -54,7 +54,7 @@ jobs:
         run: nix build .#rustdoc
 
       - name: Prepare assets for upload
-        run: cp -r --dereference --no-preserve=mode,ownership result/share/doc/* public/
+        run: mkdir public && cp -r --dereference --no-preserve=mode,ownership result/share/doc/* public/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
