@@ -7,10 +7,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    crane = {
-      url = "github:ipetkov/crane";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    crane.url = "github:ipetkov/crane";
 
     advisory-db = {
       url = "github:rustsec/advisory-db";
@@ -31,7 +28,7 @@
 
       perSystem = { lib, config, self', inputs', pkgs, system, ... }:
         let
-          rustToolchain = fenix.packages.${system}.stable.withComponents [
+          rustToolchain = fenix.packages.${system}.latest.withComponents [
             "rustc"
             "cargo"
             "rustfmt"
