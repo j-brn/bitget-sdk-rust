@@ -19,7 +19,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v16
 
       - name: Cache Nix store
-        uses: DeterminateSystems/magic-nix-cache-action@v8
+        uses: DeterminateSystems/magic-nix-cache-action@v9
 
       - name: Check flake
         run: nix flake check
@@ -48,7 +48,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v16
 
       - name: Cache Nix store
-        uses: DeterminateSystems/magic-nix-cache-action@v8
+        uses: DeterminateSystems/magic-nix-cache-action@v9
 
       - name: Build docs
         run: nix build .#rustdoc
